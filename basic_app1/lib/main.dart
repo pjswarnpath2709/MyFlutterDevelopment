@@ -1,4 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import './QuestionWidget.dart';
+import './answer.dart';
+import './result.dart';
+import './quiz.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -17,55 +22,92 @@ class MyApp extends StatefulWidget {
 //adding a inderscore against any member of the class makes it private to the class and the file
 //this will be used as the conceot of oops
 class _MyAppState extends State<MyApp> {
+  final _questions = <Map<String, Object>>[
+    {
+      'questionText': "what's your favourite color",
+      'answers': <Map<String, Object>>[
+        {
+          'text': 'Black',
+          'score': 10,
+        },
+        {
+          'text': 'White',
+          'score': 1,
+        },
+        {
+          'text': 'Red',
+          'score': 5,
+        },
+        {
+          'text': 'green',
+          'score': 3,
+        }
+      ],
+    },
+    {
+      'questionText': "what's your favourite animal",
+      'answers': [
+        {'text': 'Tiger', 'score': 1},
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Girraf', 'score': 8},
+        {'text': 'Monkey', 'score': 10},
+      ],
+    },
+    {
+      'questionText': "what's your favourite fruit",
+      'answers': [
+        {'text': 'Mango', 'score': 1},
+        {'text': 'Orange', 'score': 10},
+        {'text': 'Apple', 'score': 8},
+        {'text': 'Guava', 'score': 4},
+      ],
+    },
+    {
+      'questionText': "what's your favourite Car",
+      'answers': [
+        {
+          'text': 'Maruti',
+          'score': 10,
+        },
+        {
+          'text': 'Mustang',
+          'score': 3,
+        },
+        {'text': 'Nisaan', 'score': 8},
+        {
+          'text': 'Ferrari',
+          'score': 5,
+        },
+      ],
+    }
+  ]; //list of the  data
+
   int _questionIndex = 0;
-  void _answerQuestion() {
+  int _totalScore = 0;
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
-      _questionIndex += 1;
+      _questionIndex = (_questionIndex + 1);
     });
-    print(_questionIndex);
+  }
+
+  void resetQuiz() {
+    setState(() {
+      _totalScore = 0;
+      _questionIndex = 0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = <String>[
-      "what's your favourite color",
-      "what's your favourite animal",
-      "what's your favourite fruit",
-      "what's your favorite car",
-    ]; //list of the  data
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          children: <Widget>[
-            Text(questions[_questionIndex]),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: _answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: () =>
-                  print('Answer 2 is choosen using lemda expression'),
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () {
-                print('answer 3 is choosen');
-                print('this is done by using anonymous function');
-              },
-            ),
-            RaisedButton(
-              child: Text('Answer 4'),
-              onPressed: () {
-                print('Answer 4 is choosen in the same way');
-              },
-            ),
-          ],
-        ),
+        body: (_questionIndex < _questions.length)
+            ? Quiz(_questions, _answerQuestion, _questionIndex)
+            : Result(_totalScore, resetQuiz),
         //this body only takes one widget and whole the body is covered by
         //the widget we passed through it
       ), //named arguments were passed
