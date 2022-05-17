@@ -9,11 +9,11 @@ class ResultPage extends StatelessWidget {
     String results = "";
     if (_totalScore == 0) {
       results = "hey fellow you did a Poor job! your score is zero :(";
-    } else if (_totalScore == 1) {
+    } else if (_totalScore == 10) {
       results = " need improvement fella! your score is 1 ";
-    } else if (_totalScore == 2) {
+    } else if (_totalScore == 20) {
       results = "not so bad but need improvemnt! your score is 2";
-    } else if (_totalScore == 3) {
+    } else if (_totalScore == 30) {
       results =
           "good you scored a 3! , study hard  so thst next time you would score a 4!";
     } else {
