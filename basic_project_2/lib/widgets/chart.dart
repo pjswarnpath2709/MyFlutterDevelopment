@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
-import './chart_bar.dart';
-
-import '../models/transaction.dart';
 import 'package:flutter/material.dart';
+import '../models/transaction.dart';
 import 'package:intl/intl.dart';
+import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
@@ -21,7 +18,7 @@ class Chart extends StatelessWidget {
         if (recentTransactions[i].date.day == weekDay.day &&
             recentTransactions[i].date.month == weekDay.month &&
             recentTransactions[i].date.year == weekDay.year) {
-          totalSum += recentTransactions[i].money;
+          totalSum += recentTransactions[i].amount;
         }
       }
       print(
@@ -42,7 +39,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
