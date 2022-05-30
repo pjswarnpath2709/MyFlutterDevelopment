@@ -11,27 +11,28 @@ class MyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
       child: transactions.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  'No Transactions Added yet!',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 300,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
+          ? LayoutBuilder(builder: ((context, constraints) {
+              return Column(
+                children: <Widget>[
+                  Text(
+                    'No Transactions Added yet!',
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                ),
-              ],
-            )
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: constraints.maxHeight * 0.7,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                ],
+              );
+            }))
           : ListView.builder(
               itemBuilder: (ctx, index) {
                 return ListItem(

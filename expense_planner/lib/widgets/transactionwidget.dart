@@ -35,15 +35,28 @@ class ListItem extends StatelessWidget {
         subtitle: Text(
           DateFormat.yMMMd().format(trans.date),
         ),
-        trailing: IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: Theme.of(context).errorColor,
-          ),
-          onPressed: () {
-            deleteItem(trans.id);
-          },
-        ),
+        trailing: MediaQuery.of(context).size.width > 360
+            ? Container(
+                child: FlatButton.icon(
+                  onPressed: () {
+                    deleteItem(trans.id);
+                  },
+                  textColor: Theme.of(context).errorColor,
+                  icon: const Icon(Icons.delete),
+                  label: const FittedBox(
+                    child: Text('Delete'),
+                  ),
+                ),
+              )
+            : IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).errorColor,
+                ),
+                onPressed: () {
+                  deleteItem(trans.id);
+                },
+              ),
       ),
     );
   }
