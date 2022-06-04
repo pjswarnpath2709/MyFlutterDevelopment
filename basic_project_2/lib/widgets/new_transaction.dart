@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -31,11 +32,16 @@ class _NewTransactionState extends State<NewTransaction> {
   DateTime? _selectedDate;
   void _submitData() {
     final String enterTitle = _tittlecontroller.text;
-    final double enterAmount = double.parse(_amountcontroller.text);
+    final double? enterAmount;
+    if (_amountcontroller.text != "") {
+      enterAmount = double.parse(_amountcontroller.text);
+    } else {
+      enterAmount = null;
+    }
 
     if (enterTitle == null ||
-        enterAmount <= 0 ||
         enterAmount == null ||
+        enterAmount <= 0 ||
         _selectedDate == null) {
       return;
     }
@@ -49,54 +55,61 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Title'),
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-              controller: _tittlecontroller,
-              keyboardType: TextInputType.text,
-              onSubmitted: (_) => _submitData(),
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Amount'),
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-              controller: _amountcontroller,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-            ),
-            Container(
-              child: Row(children: [
-                Text(
-                  _selectedDate == null
-                      ? 'choosen date!'
-                      : DateFormat().add_yMMMd().format(_selectedDate!),
+    return SingleChildScrollView(
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 10,
+            top: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: 'Title'),
+                style: const TextStyle(
+                  fontSize: 20,
                 ),
-                IconButton(
-                  onPressed: openDateChooser,
-                  icon: const Icon(Icons.date_range),
-                  color: Colors.purple,
-                )
-              ]),
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {
-                  _submitData();
-                },
-                child: const Text('Add Transaction'),
+                controller: _tittlecontroller,
+                keyboardType: TextInputType.text,
+                onSubmitted: (_) => _submitData(),
               ),
-            )
-          ],
+              TextField(
+                decoration: const InputDecoration(labelText: 'Amount'),
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+                controller: _amountcontroller,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),
+              ),
+              Container(
+                child: Row(children: [
+                  Text(
+                    _selectedDate == null
+                        ? 'choosen date!'
+                        : DateFormat().add_yMMMd().format(_selectedDate!),
+                  ),
+                  IconButton(
+                    onPressed: openDateChooser,
+                    icon: const Icon(Icons.date_range),
+                    color: Colors.purple,
+                  )
+                ]),
+              ),
+              Container(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _submitData();
+                  },
+                  child: const Text('Add Transaction'),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
