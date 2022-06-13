@@ -10,7 +10,9 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function btnclick;
 
-  NewTransaction(this.btnclick);
+  NewTransaction(this.btnclick) {
+    print('new Transaction Widget');
+  }
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -20,6 +22,36 @@ class _NewTransactionState extends State<NewTransaction> {
   final _tittlecontroller = TextEditingController();
   final _amountcontroller = TextEditingController();
   DateTime? _selectedDate;
+
+  _NewTransactionState() {
+    print('Constructor NewTransaction State');
+  }
+
+  //it is only called once when an state object is created hence , it is a state initialiser
+  @override
+  void initState() {
+    //required when we are dealing with the web servers
+    print('initState()');
+    //iske upar  sara code likhna hai
+    super.initState();
+  }
+
+//this is a method exists in parent class , when a widget is changed it is called
+  @override
+  void didUpdateWidget(covariant NewTransaction oldWidget) {
+    // TODO: implement didUpdateWidget
+    print('did update widget');
+    super.didUpdateWidget(oldWidget);
+  }
+
+//when the state object is also deleted
+  @override
+  void dispose() {
+    //this is used to clearing the data
+    print('dispose');
+    super.dispose();
+  }
+
   void _submitData() {
     final String enterTitle = _tittlecontroller.text;
     final double enterAmount;
