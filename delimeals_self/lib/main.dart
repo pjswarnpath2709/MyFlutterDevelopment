@@ -1,4 +1,5 @@
 import 'package:delimeals_self/screens/category_screen.dart';
+import 'package:delimeals_self/screens/item_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,7 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Navigation Practice',
-      home: MyHomePage(),
+
       theme: ThemeData(
         primarySwatch: Colors.grey,
         accentColor: Colors.lightBlue,
@@ -36,6 +37,16 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
             )),
       ),
+
+      //initial route
+      initialRoute: '/',
+
+      //initialising all the routes
+      routes: {
+        '/': (ctx) => CategoriesScreen(),
+        CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
+        ItemScreen.routeName: (ctx) => ItemScreen(),
+      },
     );
   }
 }
@@ -55,5 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }

@@ -1,3 +1,4 @@
+import 'package:delimeals_self/screens/item_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryTiles extends StatelessWidget {
@@ -11,11 +12,38 @@ class CategoryTiles extends StatelessWidget {
     required this.discription,
   });
 
+//Material Page Routes Method
+  // void _selectCategory(BuildContext ctx) {
+  //   Navigator.of(ctx).push(
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return ItemScreen(
+  //           categoryId: catid,
+  //           categoryTitle: category,
+  //         );
+  //       },
+  //       fullscreenDialog: false,
+  //     ),
+  //   );
+  // }
+
+  void _selectCategory(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      ItemScreen.routeName,
+      arguments: {
+        'id': catid,
+        'title': category,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
-      onTap: () {},
+      onTap: () {
+        _selectCategory(context);
+      },
       splashColor: Colors.orange,
       child: Container(
         height: 130,
