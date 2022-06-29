@@ -1,5 +1,7 @@
 import 'package:delimeals_self/screens/category_screen.dart';
+import 'package:delimeals_self/screens/item_detail_screen.dart';
 import 'package:delimeals_self/screens/item_screen.dart';
+import 'package:delimeals_self/screens/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,12 +14,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
         accentColor: Colors.lightBlue,
         textTheme: ThemeData.light().textTheme.copyWith(
-            bodyLarge: const TextStyle(
-              color: Color.fromARGB(255, 32, 112, 112),
-            ),
-            bodyMedium: const TextStyle(
-              color: Color.fromARGB(255, 31, 136, 136),
-            ),
             titleLarge: const TextStyle(
               fontSize: 22,
               fontFamily: 'Roboto',
@@ -44,8 +40,10 @@ class MyApp extends StatelessWidget {
       //initialising all the routes
       routes: {
         '/': (ctx) => CategoriesScreen(),
+        TabScreen.routeName: (ctx) => TabScreen(),
         CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
         ItemScreen.routeName: (ctx) => ItemScreen(),
+        ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
       },
     );
   }

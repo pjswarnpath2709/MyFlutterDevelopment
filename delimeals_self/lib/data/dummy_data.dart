@@ -631,3 +631,89 @@ const DUMMY_ITEMS = [
     ratings: 3,
   ),
 ];
+
+class DataCollector {
+  List<ShopItem> _favoritesItems = [];
+  List<ShopItem> _cartItems = [];
+  DataCollector._privateConstructor();
+  static final DataCollector _instance = DataCollector._privateConstructor();
+  factory DataCollector() {
+    return _instance;
+  }
+  void addToFavorites(String title) {
+    ShopItem shopitem =
+        DUMMY_ITEMS.firstWhere((element) => element.title == title);
+
+    if (!_favoritesItems.contains(shopitem)) {
+      _favoritesItems.add(shopitem);
+    }
+    printFavorites();
+  }
+
+  void addToCart(String title) {
+    ShopItem shopitem =
+        DUMMY_ITEMS.firstWhere((element) => element.title == title);
+    if (!_cartItems.contains(shopitem)) {
+      _cartItems.add(shopitem);
+    }
+    printCart();
+  }
+
+  void removeFavouriteItem(String title) {
+    if (_favoritesItems.isNotEmpty) {
+      _favoritesItems.removeWhere((element) => element.title == title);
+    }
+    printFavorites();
+  }
+
+  void removeCartItem(String title) {
+    if (_cartItems.isNotEmpty) {
+      _cartItems.removeWhere((element) => element.title == title);
+    }
+    printCart();
+  }
+
+  bool favouritesAlreadyHas(String title) {
+    ShopItem shopitem =
+        DUMMY_ITEMS.firstWhere((element) => element.title == title);
+    if (_favoritesItems.contains(shopitem)) {
+      return true;
+    }
+    return false;
+  }
+
+  bool cartAlreadyHas(String title) {
+    ShopItem shopitem =
+        DUMMY_ITEMS.firstWhere((element) => element.title == title);
+    if (_cartItems.contains(shopitem)) {
+      return true;
+    }
+    return false;
+  }
+
+  void printFavorites() {
+    print("favorite Items: ${this.hashCode.toString()}");
+    print(_favoritesItems.map((e) => e.title).toList());
+  }
+
+  void clearFavorites() {
+    _favoritesItems.clear();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+  }
+
+  void printCart() {
+    print("cartItems: ${this.hashCode.toString()}");
+    print(_cartItems.map((e) => e.title).toList());
+  }
+
+  List<ShopItem> get getFavoritesItems {
+    return _favoritesItems;
+  }
+
+  List<ShopItem> get getCartItems {
+    return _cartItems;
+  }
+}

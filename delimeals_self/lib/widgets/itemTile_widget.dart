@@ -1,4 +1,9 @@
+import 'package:delimeals_self/data/dummy_data.dart';
+import 'package:delimeals_self/effects/Effects.dart';
+
+import '../screens/item_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ItemTile extends StatelessWidget {
   final String category;
@@ -18,6 +23,21 @@ class ItemTile extends StatelessWidget {
     required this.ratings,
     required this.imageUrl,
   });
+
+  void _selectedItemTile(BuildContext cntx) {
+    Navigator.of(cntx).pushNamed(
+      ItemDetailScreen.routeName,
+      arguments: <String, Object>{
+        'catId': catId,
+        'title': title,
+        'price': price,
+        'ratings': ratings,
+        'imageUrl': imageUrl,
+        'type': type,
+      },
+    );
+  }
+
   Widget _buildDescriptionRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,15 +82,25 @@ class ItemTile extends StatelessWidget {
     );
   }
 
-  Widget _buildButtonRow() {
+  Widget _buildButtonRow(BuildContext cntx) {
+    final datacollector = DataCollector();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (datacollector.favouritesAlreadyHas(title)) {
+                EffectsOnScreen.showToast(
+                    "Already added to Faverites 🥰", cntx);
+              } else {
+                EffectsOnScreen.showSnackBar(
+                    "Added to Favourites ❤️", "See Favourites", cntx, () {});
+                datacollector.addToFavorites(title);
+              }
+            },
             child: const Text(
-              "Buy Now",
+              "Add to Favorites ❤️",
               style: TextStyle(fontSize: 10, color: Colors.white),
             ),
           ),
@@ -87,9 +117,17 @@ class ItemTile extends StatelessWidget {
         ),
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (datacollector.cartAlreadyHas(title)) {
+                EffectsOnScreen.showToast("Already Added to cart 😉🤙", cntx);
+              } else {
+                EffectsOnScreen.showSnackBar(
+                    "Added to Cart! 🥳", "See Cart! 🛒 ", cntx, () {});
+                datacollector.addToCart(title);
+              }
+            },
             child: const Text(
-              "Add To Cart",
+              "Add To Cart 📥",
               style: TextStyle(fontSize: 10, color: Colors.white),
             ),
           ),
@@ -101,7 +139,6 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
       splashColor: Colors.black,
       child: Card(
         elevation: 5,
@@ -111,11 +148,16 @@ class ItemTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                imageUrl,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.contain,
+              InkWell(
+                onTap: () {
+                  _selectedItemTile(context);
+                },
+                child: Image.network(
+                  imageUrl,
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.contain,
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -141,7 +183,7 @@ class ItemTile extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              _buildButtonRow(),
+              _buildButtonRow(context),
             ],
           ),
         ),
