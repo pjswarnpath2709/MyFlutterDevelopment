@@ -1,7 +1,7 @@
-import 'package:delimeals_self/screens/category_screen.dart';
-import 'package:delimeals_self/screens/item_detail_screen.dart';
-import 'package:delimeals_self/screens/item_screen.dart';
-import 'package:delimeals_self/screens/tab_screen.dart';
+import '../screens/category_screen.dart';
+import '../screens/item_detail_screen.dart';
+import '../screens/item_screen.dart';
+import '../screens/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
 
       //initialising all the routes
       routes: {
-        '/': (ctx) => CategoriesScreen(),
+        '/': (ctx) => TabScreen(),
         TabScreen.routeName: (ctx) => TabScreen(),
         CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
         ItemScreen.routeName: (ctx) => ItemScreen(),
