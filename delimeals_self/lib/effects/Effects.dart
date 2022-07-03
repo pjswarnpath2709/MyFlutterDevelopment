@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../widgets/warning_modal_sheet.dart';
+
 class EffectsOnScreen {
-  //shoeing a snakbar on the screen
+  //showing a snakbar on the screen
   static void showSnackBar(
     String message1,
     String message2,
@@ -40,6 +44,34 @@ class EffectsOnScreen {
     );
     ScaffoldMessenger.of(ctx).showSnackBar(
       snackBar,
+    );
+  }
+
+  static Widget SepratorLine({
+    double thickness = 2,
+    double rightGap = 0,
+    double leftGap = 0,
+    Color color = Colors.red,
+    double height = 10,
+    double aboveSpace = 10,
+    double belowSpace = 10,
+  }) {
+    return Column(
+      children: [
+        SizedBox(
+          height: aboveSpace,
+        ),
+        Divider(
+          thickness: thickness,
+          color: color,
+          indent: leftGap,
+          endIndent: rightGap,
+          height: height,
+        ),
+        SizedBox(
+          height: belowSpace,
+        ),
+      ],
     );
   }
 

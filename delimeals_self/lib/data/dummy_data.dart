@@ -1,3 +1,5 @@
+import 'package:delimeals_self/models/ordered_items_modal.dart';
+
 import '../models/shop_item_model.dart';
 import '../models/category_item_model.dart';
 
@@ -633,8 +635,9 @@ const DUMMY_ITEMS = [
 ];
 
 class DataCollector {
-  List<ShopItem> _favoritesItems = [];
-  List<ShopItem> _cartItems = [];
+  final List<ShopItem> _favoritesItems = [];
+  final List<ShopItem> _cartItems = [];
+  final List<PlacedOrder> _previousOrders = [];
   DataCollector._privateConstructor();
   static final DataCollector _instance = DataCollector._privateConstructor();
   factory DataCollector() {
@@ -715,5 +718,21 @@ class DataCollector {
 
   List<ShopItem> get getCartItems {
     return _cartItems;
+  }
+
+  void addOrderToPreviousOrderList(PlacedOrder order) {
+    _previousOrders.add(order);
+    printPreviousOrder();
+  }
+
+  List<PlacedOrder> get getPreviousOrders {
+    return _previousOrders;
+  }
+
+  void printPreviousOrder() {
+    for (final ele in _previousOrders) {
+      print(ele.hashCode);
+      print(ele.listofItemsOrdered);
+    }
   }
 }

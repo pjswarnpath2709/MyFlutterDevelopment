@@ -1,3 +1,6 @@
+import 'package:delimeals_self/screens/filters_screen.dart';
+import 'package:delimeals_self/screens/previous_orders.dart';
+import 'package:delimeals_self/screens/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -81,19 +84,27 @@ class MainDrawer extends StatelessWidget {
           _buildListTile(
             "Home",
             Icons.home_rounded,
-            () {},
+            () {
+              Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
+            },
           ),
           sizedBoxDivider,
           _buildListTile(
             "Filters",
             Icons.filter_alt,
-            () {},
+            () {
+              Navigator.of(context)
+                  .pushReplacementNamed(FilterScreen.routeName);
+            },
           ),
           sizedBoxDivider,
           _buildListTile(
             "Previous Orders",
             Icons.rotate_left_rounded,
-            () {},
+            () {
+              Navigator.of(context)
+                  .pushReplacementNamed(PreviousOrderScreen.routeName);
+            },
           ),
           sizedBoxDivider,
           Container(

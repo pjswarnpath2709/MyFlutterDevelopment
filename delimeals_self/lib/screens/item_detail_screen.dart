@@ -1,4 +1,6 @@
 import 'package:delimeals_self/effects/Effects.dart';
+import 'package:delimeals_self/screens/CartScreenToVisit.dart';
+import 'package:delimeals_self/screens/FavouriteScreenToVisit.dart';
 import 'package:flutter/material.dart';
 import "../data/dummy_data.dart";
 
@@ -13,11 +15,19 @@ class ItemDetailScreen extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             if (datacollector.favouritesAlreadyHas(title)) {
+              ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
               EffectsOnScreen.showToast("Already added to Faverites 🥰", ctx);
             } else {
-              EffectsOnScreen.showSnackBar(
-                  "Added to Favourites ❤️", "See Favourites", ctx, () {});
               datacollector.addToFavorites(title);
+              EffectsOnScreen.showSnackBar(
+                "Added to Favourites ❤️",
+                "See Favourites",
+                ctx,
+                () {
+                  ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
+                  Navigator.of(ctx).pushNamed(FavoriteScreenToVisit.routeName);
+                },
+              );
             }
           },
           child: const Text(
@@ -33,11 +43,20 @@ class ItemDetailScreen extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             if (datacollector.cartAlreadyHas(title)) {
+              ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
               EffectsOnScreen.showToast("Already Added to cart 😉🤙", ctx);
             } else {
-              EffectsOnScreen.showSnackBar(
-                  "Added to Cart! 🥳", "See Cart! 🛒 ", ctx, () {});
               datacollector.addToCart(title);
+              ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
+              EffectsOnScreen.showSnackBar(
+                "Added to Cart! 🥳",
+                "See Cart! 🛒 ",
+                ctx,
+                () {
+                  ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
+                  Navigator.of(ctx).pushNamed(CartScreenToVisit.routeName);
+                },
+              );
             }
           },
           child: const Text(

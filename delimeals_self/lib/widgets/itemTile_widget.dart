@@ -1,5 +1,8 @@
 import 'package:delimeals_self/data/dummy_data.dart';
 import 'package:delimeals_self/effects/Effects.dart';
+import 'package:delimeals_self/screens/CartScreenToVisit.dart';
+import 'package:delimeals_self/screens/FavouriteScreenToVisit.dart';
+import 'package:delimeals_self/screens/cart_screen.dart';
 
 import '../screens/item_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +98,15 @@ class ItemTile extends StatelessWidget {
                     "Already added to Faverites 🥰", cntx);
               } else {
                 EffectsOnScreen.showSnackBar(
-                    "Added to Favourites ❤️", "See Favourites", cntx, () {});
+                  "Added to Favourites ❤️",
+                  "See Favourites",
+                  cntx,
+                  () {
+                    ScaffoldMessenger.of(cntx).removeCurrentSnackBar();
+                    Navigator.of(cntx)
+                        .pushNamed(FavoriteScreenToVisit.routeName);
+                  },
+                );
                 datacollector.addToFavorites(title);
               }
             },
@@ -122,7 +133,14 @@ class ItemTile extends StatelessWidget {
                 EffectsOnScreen.showToast("Already Added to cart 😉🤙", cntx);
               } else {
                 EffectsOnScreen.showSnackBar(
-                    "Added to Cart! 🥳", "See Cart! 🛒 ", cntx, () {});
+                  "Added to Cart! 🥳",
+                  "See Cart! 🛒 ",
+                  cntx,
+                  () {
+                    ScaffoldMessenger.of(cntx).removeCurrentSnackBar();
+                    Navigator.of(cntx).pushNamed(CartScreenToVisit.routeName);
+                  },
+                );
                 datacollector.addToCart(title);
               }
             },
