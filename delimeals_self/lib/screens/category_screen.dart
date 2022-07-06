@@ -16,6 +16,7 @@ class CategoriesScreen extends StatelessWidget {
         ),
       ),
       child: ListView.builder(
+        // scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.all(20),
         itemBuilder: (ctx, index) {
           return CategoryTiles(

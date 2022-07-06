@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class OrderDetailScreen extends StatelessWidget {
-  static final String routeName = "/order_detail_screen";
+  static const String routeName = "/order_detail_screen";
   const OrderDetailScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class OrderDetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: 550,
             child: ListView.builder(
               itemBuilder: ((context, index) {
@@ -77,7 +77,7 @@ class OrderDetailScreen extends StatelessWidget {
             indent: 100,
             endIndent: 100,
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 120,
             child: Column(

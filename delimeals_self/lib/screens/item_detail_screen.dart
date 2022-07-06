@@ -1,6 +1,10 @@
+import 'package:delimeals_self/models/ordered_items_modal.dart';
+import 'package:delimeals_self/models/shop_item_model.dart';
+
+import '../widgets/buyWidget.dart';
 import '../effects/Effects.dart';
-import '../screens/CartScreenToVisit.dart';
-import '../screens/FavouriteScreenToVisit.dart';
+import './CartScreenToVisit.dart';
+import './FavouriteScreenToVisit.dart';
 import 'package:flutter/material.dart';
 import "../data/dummy_data.dart";
 
@@ -35,7 +39,23 @@ class ItemDetailScreen extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              context: ctx,
+              builder: (_) {
+                ShopItem shpitm = DUMMY_ITEMS.firstWhere(
+                  (element) => element.title == title,
+                );
+                return BuyModalSheet(
+                  placedOrder: PlacedOrder(
+                    listofItemsOrdered: [shpitm],
+                  ),
+                  extraThingsToDo: () {},
+                );
+              },
+            );
+          },
           child: const Text(
             'Buy Now',
           ),

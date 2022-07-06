@@ -38,7 +38,7 @@ class _PreviousOrderScreenState extends State<PreviousOrderScreen> {
           centerTitle: true,
         ),
         drawer: const MainDrawer(),
-        body: Container(
+        body: SizedBox(
           height: 800,
           width: double.infinity,
           child: ListView.builder(

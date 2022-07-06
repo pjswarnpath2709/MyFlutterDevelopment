@@ -720,7 +720,7 @@ class DataCollector {
   }
 
   void addOrderToPreviousOrderList(PlacedOrder order) {
-    _previousOrders.add(order);
+    _previousOrders.insert(0, order);
     printPreviousOrder();
   }
 

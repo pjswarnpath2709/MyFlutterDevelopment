@@ -58,43 +58,41 @@ class PlacedOrderTile extends StatelessWidget {
           ),
           ...placedOrder.listofItemsOrdered
               .map(
-                (e) => Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        " ${e.title}",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                (e) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      " ${e.title}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
-                      Text(
-                        "=> ItemCat: ${e.catId}",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                    ),
+                    Text(
+                      "=> ItemCat: ${e.catId}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
-                      Text(
-                        "=> ItemType: ${e.type}",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                    ),
+                    Text(
+                      "=> ItemType: ${e.type}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
-                      Text(
-                        "=> ItemType: ${e.price.toStringAsFixed(2)}",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                    ),
+                    Text(
+                      "=> ItemType: ${e.price.toStringAsFixed(2)}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
-                      const Divider(
-                        thickness: 0.2,
-                      ),
-                    ],
-                  ),
+                    ),
+                    const Divider(
+                      thickness: 0.2,
+                    ),
+                  ],
                 ),
               )
               .toList(),

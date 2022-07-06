@@ -1,3 +1,5 @@
+import 'package:delimeals_self/widgets/buyWidget.dart';
+
 import '../effects/Effects.dart';
 import '../models/ordered_items_modal.dart';
 import '../widgets/cartTile_widegt.dart';
@@ -45,6 +47,12 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
+  void _updateScreen() {
+    setState(() {
+      DataCollector().clearCart();
+    });
+  }
+
   Widget _nonEmptyScreen(BuildContext context, List<ShopItem> ls) {
     final datacollector = DataCollector();
     return LayoutBuilder(
@@ -90,15 +98,22 @@ class _CartScreenState extends State<CartScreen> {
                     final cartItems = datacollector.getCartItems
                         .where((element) => element.price > 0)
                         .toList();
-                    datacollector.addOrderToPreviousOrderList(
-                      PlacedOrder(
-                        listofItemsOrdered: cartItems,
-                      ),
+
+                    final placedOrder = PlacedOrder(
+                      listofItemsOrdered: cartItems,
                     );
-                    EffectsOnScreen.showToast("Order Placed 😉", context);
-                    setState(() {
-                      datacollector.clearCart();
-                    });
+                    showBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) {
+                        return BuyModalSheet(
+                          placedOrder: placedOrder,
+                          extraThingsToDo: () {
+                            _updateScreen();
+                          },
+                        );
+                      },
+                    );
                   },
                   child: const Text("Place Order for All Items In Cart 🤯🤩"),
                 ),
