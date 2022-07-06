@@ -138,7 +138,7 @@ class ItemDetailScreen extends StatelessWidget {
                         thickness: 2,
                       ),
                       Text(
-                        "$title",
+                        title,
                         style: const TextStyle(
                           fontSize: 32,
                         ),

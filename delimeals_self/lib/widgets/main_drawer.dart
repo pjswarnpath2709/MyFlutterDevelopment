@@ -90,15 +90,6 @@ class MainDrawer extends StatelessWidget {
           ),
           sizedBoxDivider,
           _buildListTile(
-            "Filters",
-            Icons.filter_alt,
-            () {
-              Navigator.of(context)
-                  .pushReplacementNamed(FilterScreen.routeName);
-            },
-          ),
-          sizedBoxDivider,
-          _buildListTile(
             "Previous Orders",
             Icons.rotate_left_rounded,
             () {
