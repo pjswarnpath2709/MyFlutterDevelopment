@@ -1,4 +1,4 @@
-import 'package:delimeals_self/models/shop_item_model.dart';
+import '../models/shop_item_model.dart';
 
 class PlacedOrder {
   final DateTime _dateofOrder = DateTime.now();

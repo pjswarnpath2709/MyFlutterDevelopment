@@ -3,8 +3,6 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../widgets/warning_modal_sheet.dart';
-
 class EffectsOnScreen {
   //showing a snakbar on the screen
   static void showSnackBar(

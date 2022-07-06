@@ -1,6 +1,6 @@
-import 'package:delimeals_self/effects/Effects.dart';
-import 'package:delimeals_self/models/ordered_items_modal.dart';
-import 'package:delimeals_self/widgets/cartTile_widegt.dart';
+import '../effects/Effects.dart';
+import '../models/ordered_items_modal.dart';
+import '../widgets/cartTile_widegt.dart';
 import 'package:flutter/material.dart';
 import '../data/dummy_data.dart';
 import '../models/shop_item_model.dart';

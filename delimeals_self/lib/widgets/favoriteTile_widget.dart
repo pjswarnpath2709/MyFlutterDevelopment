@@ -1,4 +1,4 @@
-import '../widgets/warning_modal_sheet.dart';
+import './warning_modal_sheet.dart';
 import '../data/dummy_data.dart';
 import 'package:flutter/material.dart';
 import '../effects/Effects.dart';

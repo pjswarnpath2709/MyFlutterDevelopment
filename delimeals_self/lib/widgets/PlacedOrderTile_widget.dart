@@ -1,5 +1,5 @@
-import 'package:delimeals_self/effects/Effects.dart';
-import 'package:delimeals_self/screens/previousorderdetail_screen.dart';
+import '../effects/Effects.dart';
+import '../screens/previousorderdetail_screen.dart';
 
 import '../models/ordered_items_modal.dart';
 import 'package:flutter/material.dart';

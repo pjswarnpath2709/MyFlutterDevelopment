@@ -1,5 +1,4 @@
-import 'package:delimeals_self/models/ordered_items_modal.dart';
-
+import '../models/ordered_items_modal.dart';
 import '../models/shop_item_model.dart';
 import '../models/category_item_model.dart';
 

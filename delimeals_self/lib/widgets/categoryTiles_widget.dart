@@ -1,4 +1,4 @@
-import 'package:delimeals_self/screens/item_screen.dart';
+import '../screens/item_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryTiles extends StatelessWidget {

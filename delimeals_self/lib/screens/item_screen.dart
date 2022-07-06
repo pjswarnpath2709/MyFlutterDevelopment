@@ -1,9 +1,7 @@
-import 'package:delimeals_self/data/dummy_data.dart';
-import 'package:delimeals_self/models/category_item_model.dart';
-import 'package:delimeals_self/models/shop_item_model.dart';
-import 'package:delimeals_self/screens/filters_screen.dart';
-import 'package:delimeals_self/widgets/filtersWidegt.dart';
-import 'package:delimeals_self/widgets/itemTile_widget.dart';
+import '../data/dummy_data.dart';
+import '../models/shop_item_model.dart';
+import '../widgets/filtersWidegt.dart';
+import '../widgets/itemTile_widget.dart';
 import 'package:flutter/material.dart';
 
 class ItemScreen extends StatefulWidget {

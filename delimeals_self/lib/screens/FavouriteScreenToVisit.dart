@@ -1,4 +1,4 @@
-import 'package:delimeals_self/screens/favorite_screen.dart';
+import '../screens/favorite_screen.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteScreenToVisit extends StatefulWidget {

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class ShopItem {
   final String catId;
   final String title;

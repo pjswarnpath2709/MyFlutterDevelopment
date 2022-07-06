@@ -1,6 +1,5 @@
-import 'package:delimeals_self/screens/filters_screen.dart';
-import 'package:delimeals_self/screens/previous_orders.dart';
-import 'package:delimeals_self/screens/tab_screen.dart';
+import '../screens/previous_orders.dart';
+import '../screens/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {

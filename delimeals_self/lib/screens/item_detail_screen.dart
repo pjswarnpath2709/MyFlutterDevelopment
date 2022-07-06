@@ -1,6 +1,6 @@
-import 'package:delimeals_self/effects/Effects.dart';
-import 'package:delimeals_self/screens/CartScreenToVisit.dart';
-import 'package:delimeals_self/screens/FavouriteScreenToVisit.dart';
+import '../effects/Effects.dart';
+import '../screens/CartScreenToVisit.dart';
+import '../screens/FavouriteScreenToVisit.dart';
 import 'package:flutter/material.dart';
 import "../data/dummy_data.dart";
 

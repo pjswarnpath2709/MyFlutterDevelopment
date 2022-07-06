@@ -1,11 +1,9 @@
-import 'package:delimeals_self/screens/CartScreenToVisit.dart';
-import 'package:delimeals_self/screens/FavouriteScreenToVisit.dart';
-import 'package:delimeals_self/screens/cart_screen.dart';
-import 'package:delimeals_self/screens/favorite_screen.dart';
-import 'package:delimeals_self/screens/filters_screen.dart';
-import 'package:delimeals_self/screens/previous_orders.dart';
-import 'package:delimeals_self/screens/previousorderdetail_screen.dart';
-
+import '../screens/CartScreenToVisit.dart';
+import '../screens/FavouriteScreenToVisit.dart';
+import '../screens/cart_screen.dart';
+import '../screens/favorite_screen.dart';
+import '../screens/previous_orders.dart';
+import '../screens/previousorderdetail_screen.dart';
 import '../screens/category_screen.dart';
 import '../screens/item_detail_screen.dart';
 import '../screens/item_screen.dart';
@@ -56,7 +54,6 @@ class MyApp extends StatelessWidget {
         CartScreen.routeName: (ctx) => const CartScreen(),
         FavoriteScreenToVisit.routeName: (ctx) => const FavoriteScreenToVisit(),
         CartScreenToVisit.routeName: (ctx) => const CartScreenToVisit(),
-        FilterScreen.routeName: (ctx) => const FilterScreen(),
         OrderDetailScreen.routeName: (ctx) => const OrderDetailScreen(),
         PreviousOrderScreen.routeName: (ctx) => const PreviousOrderScreen(),
       },

@@ -1,7 +1,6 @@
-import 'package:delimeals_self/widgets/warning_modal_sheet.dart';
+import '../widgets/warning_modal_sheet.dart';
 import 'package:flutter/material.dart';
 import '../data/dummy_data.dart';
-import '../effects/Effects.dart';
 import '../models/shop_item_model.dart';
 
 class CartTile extends StatelessWidget {

@@ -1,12 +1,10 @@
-import 'package:delimeals_self/data/dummy_data.dart';
-import 'package:delimeals_self/effects/Effects.dart';
-import 'package:delimeals_self/screens/CartScreenToVisit.dart';
-import 'package:delimeals_self/screens/FavouriteScreenToVisit.dart';
-import 'package:delimeals_self/screens/cart_screen.dart';
+import '../data/dummy_data.dart';
+import '../effects/Effects.dart';
+import '../screens/CartScreenToVisit.dart';
+import '../screens/FavouriteScreenToVisit.dart';
 
 import '../screens/item_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ItemTile extends StatelessWidget {
   final String category;

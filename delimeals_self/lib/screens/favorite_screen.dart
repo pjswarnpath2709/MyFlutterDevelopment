@@ -1,9 +1,6 @@
-import 'package:delimeals_self/widgets/favoriteTile_widget.dart';
-
-import '../effects/Effects.dart';
+import '../widgets/favoriteTile_widget.dart';
 import '../data/dummy_data.dart';
 import 'package:flutter/material.dart';
-
 import '../models/shop_item_model.dart';
 
 class FavouriteScreen extends StatefulWidget {

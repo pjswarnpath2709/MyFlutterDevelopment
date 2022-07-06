@@ -1,4 +1,4 @@
-import 'package:delimeals_self/screens/cart_screen.dart';
+import '../screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 
 class CartScreenToVisit extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:delimeals_self/widgets/PlacedOrderTile_widget.dart';
+import '../widgets/PlacedOrderTile_widget.dart';
 
 import '../widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
