@@ -21,25 +21,55 @@ class ProductDetailScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                height: 400,
-                width: double.infinity,
-                child: Image.network(
-                  itemToShow.imageUrl,
-                  fit: BoxFit.contain,
-                ),
-              ),
               const SizedBox(
                 height: 10,
               ),
-              Chip(
-                backgroundColor: Colors.lightBlue,
-                label: Text(
-                  '\$ ${itemToShow.price}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
+              SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  itemToShow.imageUrl,
+                  fit: BoxFit.cover,
                 ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Chip(
+                    backgroundColor: Colors.lightBlue,
+                    label: FittedBox(
+                      child: Text(
+                        'Price: \$ ${itemToShow.price}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Chip(
+                      backgroundColor: Colors.lightBlue,
+                      label: FittedBox(
+                        child: Text(
+                          "Product Id : ${itemToShow.id} ",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 10,

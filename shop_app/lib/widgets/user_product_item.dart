@@ -16,6 +16,7 @@ class UserProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScaffoldMessengerContext = ScaffoldMessenger.of(context);
     return Card(
       elevation: 5,
       child: ListTile(
@@ -47,13 +48,21 @@ class UserProductItem extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {
-                Provider.of<Products>(
-                  context,
-                  listen: false,
-                ).removeProductById(
-                  productId,
-                );
+              onPressed: () async {
+                try {
+                  await Provider.of<Products>(
+                    context,
+                    listen: false,
+                  ).removeProductById(
+                    productId,
+                  );
+                } catch (error) {
+                  ScaffoldMessengerContext.showSnackBar(
+                    const SnackBar(
+                      content: Text('Delete Failed!'),
+                    ),
+                  );
+                }
               },
               icon: const Icon(
                 Icons.delete,

@@ -1,66 +1,13 @@
 import 'package:flutter/material.dart';
+import '../models/http_exceptions.dart';
 import './product.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Products with ChangeNotifier {
-  final List<Product> _itemsAvailable = [
-    Product(
-      id: 'p1',
-      discription: 'A red t-shirt , pretty red !',
-      title: 'Red-Tshirt',
-      price: 29.99,
-      imageUrl:
-          'https://images.unsplash.com/photo-1521498542256-5aeb47ba2b36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    ),
-    Product(
-      id: 'p2',
-      discription: 'A pretty white looking top for ladies!',
-      title: 'White-Top',
-      price: 39.99,
-      imageUrl:
-          'https://images.unsplash.com/photo-1566207274740-0f8cf6b7d5a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80',
-    ),
-    Product(
-      id: 'p3',
-      discription: 'really cool looking trousers , very beautiful match!',
-      title: 'Green-trousers',
-      price: 49.99,
-      imageUrl:
-          'https://images.unsplash.com/photo-1598913870097-4281516c3d21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2lybCUyMHRyb3VzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-    ),
-    Product(
-      id: 'p4',
-      discription: 'A frying pan, with non stick properties',
-      title: 'Frying-Pan',
-      price: 59.99,
-      imageUrl:
-          'https://images.unsplash.com/photo-1624031000828-dba1b7a3e4ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    ),
-    Product(
-      id: 'p5',
-      discription: 'A unique kitchen knife , made by purest of steel',
-      title: 'Kitchen-Knife',
-      price: 23.99,
-      imageUrl:
-          'https://images.unsplash.com/photo-1604543248368-da42b20dce5b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8a25pZmV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-    ),
-    Product(
-      id: 'p6',
-      discription: 'A classy well tailored suit from the paris , a masterpiece',
-      title: 'Black-Suit',
-      price: 100.99,
-      imageUrl:
-          'https://images.unsplash.com/photo-1582897291228-f7676bfcd52c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHN1aXRzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
-    ),
-  ];
-
-  // var _showProductsOnly = false;
+  List<Product> _itemsAvailable = [];
 
   List<Product> get items {
-    // if (_showProductsOnly) {
-    //   return _itemsAvailable
-    //       .where((element) => element.isFavorite == true)
-    //       .toList();
-    // }
     return [..._itemsAvailable];
   }
 
@@ -68,30 +15,97 @@ class Products with ChangeNotifier {
     return _itemsAvailable.where((element) => element.isFavorite).toList();
   }
 
-  // void showFavouritesOnly() {
-  //   _showProductsOnly = true;
-  //   notifyListeners();
-  // }
-
-  // void showAll() {
-  //   _showProductsOnly = false;
-  //   notifyListeners();
-  // }
-
-  void addProducts(Product product) {
-    final newProduct = Product(
-      title: product.title,
-      id: DateTime.now().toString(),
-      imageUrl: product.imageUrl,
-      price: product.price,
-      discription: product.discription,
+  Future<void> fetchAndSetProducts() async {
+    var url = Uri.parse(
+      "https://flutter-shop-app-tutorials-default-rtdb.firebaseio.com/products.json",
     );
-    _itemsAvailable.add(newProduct);
-    notifyListeners();
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach(
+        (productId, productData) {
+          loadedProducts.add(
+            Product(
+              id: productId,
+              title: productData['title'],
+              discription: productData['discription'],
+              price: productData['price'],
+              isFavorite: productData['isFavorite'],
+              imageUrl: productData['imageUrl'],
+            ),
+          );
+        },
+      );
+      _itemsAvailable = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 
-  void removeProductById(String productId) {
-    _itemsAvailable.removeWhere((element) => element.id == productId);
+  Future<void> addProducts(Product product) async {
+    final url = Uri.parse(
+      'https://flutter-shop-app-tutorials-default-rtdb.firebaseio.com/products.json',
+    ); //only firebase requires this
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'title': product.title,
+            'discription': product.discription,
+            'price': product.price,
+            'imageUrl': product.imageUrl,
+            'isFavorite': product.isFavorite,
+          },
+        ),
+      );
+      // this is invisibly wrap in .then() code
+      final newProduct = Product(
+        title: product.title,
+        id: json.decode(response.body)['name'],
+        imageUrl: product.imageUrl,
+        price: product.price,
+        discription: product.discription,
+      );
+      _itemsAvailable.add(newProduct);
+      notifyListeners();
+      //this is catch block
+    } catch (erorr) {
+      rethrow;
+    }
+  }
+
+  Future<void> removeProductById(String productId) async {
+    final url = Uri.parse(
+      "https://flutter-shop-app-tutorials-default-rtdb.firebaseio.com/products/$productId.json",
+    );
+    final existingProductIndex = _itemsAvailable.indexWhere(
+      (element) => element.id == productId,
+    );
+    Product? existingProduct = _itemsAvailable[existingProductIndex];
+
+    _itemsAvailable.removeAt(existingProductIndex);
+    try {
+      final response = await http.delete(url);
+      if (response.statusCode >= 400) {
+        //throw your own error
+        throw HttpException(
+          "Could not Delete Product , status code : ${response.statusCode}",
+        );
+      }
+      existingProduct = null;
+    } catch (error) {
+      //optimisitic updating, if not deleted from server re-add the product at it's correct index , or we can say it roll-back
+      _itemsAvailable.insert(
+        existingProductIndex,
+        existingProduct!,
+      );
+      rethrow;
+    }
+
     notifyListeners();
   }
 
@@ -101,11 +115,27 @@ class Products with ChangeNotifier {
     );
   }
 
-  void updateProduct(String productId, Product newProduct) {
+  Future<void> updateProduct(String productId, Product newProduct) async {
     final prodidx = _itemsAvailable.indexWhere(
       (prod) => prod.id == productId,
     );
     if (prodidx >= 0) {
+      final url = Uri.parse(
+        "https://flutter-shop-app-tutorials-default-rtdb.firebaseio.com/products/$productId.json",
+      );
+
+      await http.patch(
+        url,
+        body: json.encode(
+          {
+            'title': newProduct.title,
+            'discription': newProduct.discription,
+            'imageUrl': newProduct.imageUrl,
+            'price': newProduct.price,
+          },
+        ),
+      );
+
       _itemsAvailable[prodidx] = newProduct;
       notifyListeners();
     } else {
