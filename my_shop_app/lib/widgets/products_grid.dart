@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/product.dart';
 import '../providers/products_provider.dart';
 import '../widgets/product_item.dart';
 
 class ProductGrid extends StatelessWidget {
+  final bool showFavs;
+  // ignore: use_key_in_widget_constructors
+  const ProductGrid({required this.showFavs});
   @override
   Widget build(BuildContext context) {
     //////+++++++++++++++++++++++++++++++++++++++++//////
@@ -12,7 +14,9 @@ class ProductGrid extends StatelessWidget {
     // setting the connection between the provider class and the widget
 
     final productsData = Provider.of<Products>(context);
-    final loadedProducts = productsData.items;
+
+    final loadedProducts =
+        (showFavs) ? productsData.favoriteItems : productsData.items;
 
     //////+++++++++++++++++++++++++++++++++++++++++//////
 
@@ -26,10 +30,20 @@ class ProductGrid extends StatelessWidget {
       ),
 
       // will use the custom widget here
-      itemBuilder: (ctx, i) => ProductItem(
-        id: loadedProducts[i].id,
-        imageUrl: loadedProducts[i].imageUrl,
-        title: loadedProducts[i].title,
+
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        //////+++++++++++++++++++++++++++++++++++++++++//////
+
+        // here we used the ChangedNotifier.value() because we don't have to create new Product , they are ALREADY CREATED IN THE PROVIDER package.
+        // so we just have to observe them now
+        value: loadedProducts[i],
+
+        //////+++++++++++++++++++++++++++++++++++++++++//////
+        child: ProductItem(
+            // id: loadedProducts[i].id,
+            // imageUrl: loadedProducts[i].imageUrl,
+            // title: loadedProducts[i].title,
+            ),
       ),
       itemCount: loadedProducts.length,
     );

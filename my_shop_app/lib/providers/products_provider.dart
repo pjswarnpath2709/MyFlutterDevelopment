@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import './product.dart';
 
 // ChangeNotifier -> allows a communication between the inherited widgets, by passing all the data into the context tree
 class Products with ChangeNotifier {
@@ -38,12 +38,28 @@ class Products with ChangeNotifier {
     ),
   ];
 
+  // var _showFavOnly = false;
+
+  //////+++++++++++++++++++++++++++++++++++++++++//////
+
+  // void setShowFavorite(bool value) {
+  //   _showFavOnly = value;
+  //   notifyListeners();
+  // }
+
   //////+++++++++++++++++++++++++++++++++++++++++//////
 
   List<Product> get items {
     // spread Operator
     // it is done because it can affect the original data
+    // if (_showFavOnly) {
+    //   return _items.where((element) => element.isFavorite == true).toList();
+    // }
     return [..._items];
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((element) => element.isFavorite).toList();
   }
 
   //////+++++++++++++++++++++++++++++++++++++++++//////
@@ -53,4 +69,5 @@ class Products with ChangeNotifier {
   }
 
   //////+++++++++++++++++++++++++++++++++++++++++//////
+
 }
