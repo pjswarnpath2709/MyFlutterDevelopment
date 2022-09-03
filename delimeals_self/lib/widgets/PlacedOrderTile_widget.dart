@@ -37,7 +37,7 @@ class PlacedOrderTile extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     EffectsOnScreen.showToast(
                       "id: ${placedOrder.hashCode.toString()}",

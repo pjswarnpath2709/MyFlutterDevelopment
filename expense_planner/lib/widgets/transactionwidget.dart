@@ -37,11 +37,13 @@ class ListItem extends StatelessWidget {
         ),
         trailing: MediaQuery.of(context).size.width > 360
             ? Container(
-                child: FlatButton.icon(
+                child: TextButton.icon(
                   onPressed: () {
                     deleteItem(trans.id);
                   },
-                  textColor: Theme.of(context).errorColor,
+                  style: TextButton.styleFrom(
+                    primary: Colors.red,
+                  ),
                   icon: const Icon(Icons.delete),
                   label: const FittedBox(
                     child: Text('Delete'),
