@@ -41,8 +41,7 @@ class ResultPage extends StatelessWidget {
             ),
           ),
         ),
-        RaisedButton(
-            color: Colors.blue,
+        ElevatedButton(
             child: const Text(
               'reset the Quiz',
               style: TextStyle(

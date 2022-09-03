@@ -28,14 +28,15 @@ class Result extends StatelessWidget {
         children: [
           Text(
             returnPhase,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.red,
               fontSize: 36,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),
-          FlatButton(onPressed: resetQuiz, child: Text('Reset every thing!')),
+          TextButton(
+              onPressed: resetQuiz, child: const Text('Reset every thing!')),
         ],
       ),
     ));

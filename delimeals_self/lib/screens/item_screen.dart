@@ -59,7 +59,7 @@ class _ItemScreenState extends State<ItemScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 3),
-            child: FlatButton.icon(
+            child: TextButton.icon(
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -75,7 +75,6 @@ class _ItemScreenState extends State<ItemScreen> {
                 Icons.filter_alt,
                 color: Colors.blue,
               ),
-              splashColor: Colors.grey,
               label: const Text(
                 "Filters",
                 textAlign: TextAlign.center,

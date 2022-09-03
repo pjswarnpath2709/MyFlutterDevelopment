@@ -7,7 +7,7 @@ class Answer extends StatelessWidget {
   final String answerText;
   // final Function selectHandler;
 /*
-HERE WE ARE using VoidCallBack becuase function does not support void returns 
+HERE WE ARE using VoidCallBack because function does not support void returns 
 https://stackoverflow.com/questions/70224169/lib-answer-dart1620-error-the-argument-type-function-cant-be-assigned-to
 */
 
@@ -19,9 +19,7 @@ https://stackoverflow.com/questions/70224169/lib-answer-dart1620-error-the-argum
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: RaisedButton(
-        color: Colors.blue,
-        textColor: Colors.white,
+      child: ElevatedButton(
         child: Text(answerText),
         onPressed: selectHandler,
       ),

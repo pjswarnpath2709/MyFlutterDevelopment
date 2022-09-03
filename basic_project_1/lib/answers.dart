@@ -10,9 +10,7 @@ class AnswerButton extends StatelessWidget {
       color: Colors.amber,
       width: double.infinity,
       margin: const EdgeInsets.all(10),
-      child: RaisedButton(
-        color: Color.fromARGB(255, 24, 36, 142),
-        textColor: Colors.white,
+      child: ElevatedButton(
         child: Text(
           answertext,
         ),
