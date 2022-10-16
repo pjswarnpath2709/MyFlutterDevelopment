@@ -70,4 +70,24 @@ class Products with ChangeNotifier {
 
   //////+++++++++++++++++++++++++++++++++++++++++//////
 
+  void addProduct(Product product) {
+    final newProduct = Product(
+      id: DateTime.now().toIso8601String(),
+      title: product.title,
+      imageUrl: product.imageUrl,
+      description: product.description,
+      price: product.price,
+    );
+
+    _items.add(newProduct);
+
+    notifyListeners();
+  }
+
+  //////+++++++++++++++++++++++++++++++++++++++++//////
+
+  void deleteProduct(String productId) {
+    _items.removeWhere((element) => element.id == productId);
+    notifyListeners();
+  }
 }

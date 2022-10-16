@@ -37,6 +37,37 @@ class CartTile extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text(
+                'Are you Sure ?',
+              ),
+              content: const Text(
+                'Do you want to remove the current item ?',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop(
+                        true); // this will return a true value as a future for showDialog box
+                  },
+                  child: const Text('YES'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop(
+                        false); // this will return a false value as a future for showDialog box
+                  },
+                  child: const Text('NO'),
+                ),
+              ],
+            );
+          },
+        );
+      },
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },

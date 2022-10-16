@@ -39,7 +39,7 @@ class _OrderItemTileState extends State<OrderItemTile> {
             ),
           ),
           if (_expanded)
-            Container(
+            SizedBox(
               height: min(
                 widget.order.products.length * 20 + 100,
                 widget.order.products.length * 20 + 180,
