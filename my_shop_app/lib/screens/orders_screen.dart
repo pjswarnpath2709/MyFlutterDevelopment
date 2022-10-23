@@ -10,20 +10,62 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orderProvider = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Orders'),
       ),
-      body: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return OrderItemTile(
-            order: orderProvider.orders[index],
-          );
+      body: FutureBuilder(
+        future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+        builder: (ctx, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            // final data = dataSnapshot.data;
+            // print(data);
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            if (dataSnapshot.error != null) {
+              return const Center(
+                child: Text(
+                  'An error occurred While Fetching your Orders please try after some time ',
+                  textAlign: TextAlign.center,
+                ),
+              );
+              // do error handling stuff here
+            } else {
+              return Consumer<Orders>(
+                builder: (ctx, orderProvider, _) {
+                  return ListView.builder(
+                    itemBuilder: (ctx, index) {
+                      return OrderItemTile(
+                        order: orderProvider.orders[index],
+                      );
+                    },
+                    itemCount: orderProvider.orders.length,
+                  );
+                },
+              );
+            }
+          }
         },
-        itemCount: orderProvider.orders.length,
       ),
       drawer: const MainDrawer(),
     );
   }
 }
+/*
+_isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemBuilder: (ctx, index) {
+                return OrderItemTile(
+                  order: orderProvider.orders[index],
+                );
+              },
+              itemCount: orderProvider.orders.length,
+            ),
+      drawer: const MainDrawer(),
+    );
+*/

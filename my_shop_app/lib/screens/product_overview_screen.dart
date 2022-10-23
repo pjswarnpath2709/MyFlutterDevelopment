@@ -7,6 +7,7 @@ import '../providers/cart.dart';
 import '../widgets/products_grid.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/badge.dart';
+import '../providers/products_provider.dart';
 
 enum FilterOptions { Favorites, All }
 
@@ -18,6 +19,34 @@ class ProductOverView extends StatefulWidget {
 
 class _ProductOverViewScreenState extends State<ProductOverView> {
   var _showOnlyFav = false;
+  var _isInitialized = false;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    // });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (!_isInitialized) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInitialized = true;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +106,13 @@ class _ProductOverViewScreenState extends State<ProductOverView> {
       gridDelegate - > how the grid will be structured , aspect ratio of the structure and the spacing between each column and space between rows
 
       */
-      body: ProductGrid(
-        showFavs: _showOnlyFav,
-      ),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductGrid(
+              showFavs: _showOnlyFav,
+            ),
     );
   }
 }
