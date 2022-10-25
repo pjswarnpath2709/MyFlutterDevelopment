@@ -59,8 +59,8 @@ class MainDrawer extends StatelessWidget {
                 trailing: const Icon(Icons.logout),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed('/');
                   Provider.of<Auth>(context, listen: false).logOut();
+                  Navigator.of(context).pushReplacementNamed('/');
                 },
               )
             ],
