@@ -1,8 +1,7 @@
 // ignore_for_file: constant_identifier_names
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../screens/cart_screen.dart';
-import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 import '../widgets/products_grid.dart';
 import '../widgets/main_drawer.dart';
@@ -13,6 +12,8 @@ enum FilterOptions { Favorites, All }
 
 // ignore: use_key_in_widget_constructors
 class ProductOverView extends StatefulWidget {
+  static const String routeName = '/product_overview_screen';
+
   @override
   State<ProductOverView> createState() => _ProductOverViewScreenState();
 }

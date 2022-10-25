@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 import '../providers/cart.dart';
 import '../screens/product_details_screen.dart';
 import '../providers/product.dart';
@@ -74,7 +75,10 @@ class ProductItem extends StatelessWidget {
                           Icons.favorite_border,
                         ),
                   onPressed: () {
-                    product.toggleFavoriteStatus();
+                    product.toggleFavoriteStatus(
+                      Provider.of<Auth>(context, listen: false).token!,
+                      Provider.of<Auth>(context, listen: false).userId!,
+                    );
                   },
                 );
               },

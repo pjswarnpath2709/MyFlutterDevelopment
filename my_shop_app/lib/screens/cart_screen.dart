@@ -11,7 +11,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-    final orderProvider = Provider.of<Orders>(context, listen: false);
+    //final orderProvider = Provider.of<Orders>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
@@ -30,7 +30,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Chip(
-                    label: Text("\$ ${cart.totalAmount}"),
+                    label: Text("\$ ${cart.totalAmount.toStringAsFixed(2)}"),
                   ),
                   OrderButton(cart: cart),
                 ],
@@ -63,6 +63,7 @@ class CartScreen extends StatelessWidget {
 
 class OrderButton extends StatefulWidget {
   final Cart cart;
+  // ignore: use_key_in_widget_constructors
   const OrderButton({required this.cart});
 
   @override

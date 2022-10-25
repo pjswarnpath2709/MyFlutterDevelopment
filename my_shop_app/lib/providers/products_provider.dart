@@ -6,40 +6,13 @@ import './product.dart';
 
 // ChangeNotifier -> allows a communication between the inherited widgets, by passing all the data into the context tree
 class Products with ChangeNotifier {
-  List<Product> _items = [
-    // Product(
-    //   id: 'p1',
-    //   title: 'Product A',
-    //   description: 'Product A is a good Product',
-    //   price: 30.00,
-    //   imageUrl:
-    //       'https://images.unsplash.com/photo-1522643628976-0a170f6722ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdCUyMGF8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-    // ),
-    // Product(
-    //   id: 'p2',
-    //   title: 'Product B',
-    //   description: 'Product B is a good Product',
-    //   price: 40.00,
-    //   imageUrl:
-    //       'https://images.unsplash.com/photo-1506152983158-b4a74a01c721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZHVjdCUyMGF8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-    // ),
-    // Product(
-    //   id: 'p3',
-    //   title: 'Product C',
-    //   description: 'Product C is a good Product',
-    //   price: 50.00,
-    //   imageUrl:
-    //       'https://images.unsplash.com/photo-1493723843671-1d655e66ac1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2R1Y3QlMjBhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
-    // ),
-    // Product(
-    //   id: 'p4',
-    //   title: 'Product D',
-    //   description: 'Product D is a good Product',
-    //   price: 60.00,
-    //   imageUrl:
-    //       'https://images.unsplash.com/photo-1491336238524-c990bd671778?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2R1Y3QlMjBhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
-    // ),
-  ];
+  final String? authToken;
+  final String? userId;
+  final List<Product> productsItems;
+  List<Product> _items = [];
+  Products(this.authToken, this.userId, this.productsItems) {
+    _items = productsItems;
+  }
 
   // var _showFavOnly = false;
 
@@ -73,17 +46,28 @@ class Products with ChangeNotifier {
 
   //////+++++++++++++++++++++++++++++++++++++++++//////
 
-  Future<void> fetchAndSetProducts() async {
-    const url =
-        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    final url =
+        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken&$filterString';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final loadedProducts = <Product>[];
+      // ignore: unnecessary_null_comparison
       if (extractedData == null) {
         return;
       }
+
+      final favoriteUrl =
+          'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId.json?auth=$authToken';
+
+      final favoriteResponse = await http.get(Uri.parse(favoriteUrl));
+
+      final favoriteData = json.decode(favoriteResponse.body);
+
       extractedData.forEach((productId, productData) {
         loadedProducts.insert(
           0,
@@ -93,7 +77,8 @@ class Products with ChangeNotifier {
             title: productData['title'],
             description: productData['description'],
             price: productData['price'],
-            isFavorite: productData['isFavorite'],
+            isFavorite:
+                favoriteData == null ? false : favoriteData[productId] ?? false,
           ),
         );
       });
@@ -111,8 +96,8 @@ class Products with ChangeNotifier {
     //////+++++++++++++++++++++++++++++++++++++++++//////
 
     // where i have to send data
-    const url =
-        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
+    final url =
+        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken';
     try {
       //////********************************//////
       final response = await http.post(
@@ -124,7 +109,7 @@ class Products with ChangeNotifier {
             'description': product.description,
             'imageUrl': product.imageUrl,
             'price': product.price,
-            'isFavorite': product.isFavorite,
+            'creatorId': userId
           },
           // the body required the data to be send in json format json.encode() converts the dart objects into json formatted data , json.encode() cannot convert a Custom Class or UserDefined datatypes so generally the data is send in the form of maps
         ),
@@ -157,7 +142,7 @@ class Products with ChangeNotifier {
     final index = _items.indexWhere((element) => element.id == id);
     if (index >= 0) {
       final url =
-          'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json';
+          'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json?auth=$authToken';
       try {
         await http.patch(
           Uri.parse(url),
@@ -173,6 +158,7 @@ class Products with ChangeNotifier {
         _items[index] = newProduct;
         notifyListeners();
       } catch (error) {
+        // ignore: avoid_print
         print(error);
         rethrow;
       }
@@ -183,7 +169,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String productId) async {
     final url =
-        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products/$productId.json';
+        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products/$productId.json?auth=$authToken';
 
     final existingProductIndex =
         _items.indexWhere((element) => element.id == productId);

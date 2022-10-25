@@ -25,20 +25,19 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String token, String userId) async {
     var oldStatus = isFavorite;
     isFavorite = !isFavorite;
 
     // to make all the listeners activate
     notifyListeners();
     try {
-      final response = await http.patch(
+      final response = await http.put(
         Uri.parse(
-            'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json'),
+          'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId/$id.json?auth=$token',
+        ),
         body: json.encode(
-          {
-            'isFavorite': isFavorite,
-          },
+          isFavorite,
         ),
       );
       if (response.statusCode >= 400) {

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,7 +21,10 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
+  final String? authToken;
+  final String? userId;
   List<OrderItem> _orders = [];
+  Orders(this.authToken, this.userId, this._orders);
 
   //////+++++++++++++++++++++++++++++++++++++++++//////
 
@@ -30,15 +35,15 @@ class Orders with ChangeNotifier {
   //////+++++++++++++++++++++++++++++++++++++++++//////
 
   Future<void> addOrders(List<CartItem> cartProducts, double total) async {
-    const url =
-        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json';
+    final url =
+        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/orders/$userId.json?auth=$authToken';
     final timeStamp = DateTime.now();
     try {
       final response = await http.post(
         Uri.parse(url),
         body: json.encode(
           {
-            'amount': total,
+            'amount': double.parse(total.toStringAsFixed(2)),
             'dateTime': timeStamp.toIso8601String(),
             'products': cartProducts.map(
               (cartProduct) {
@@ -76,8 +81,8 @@ class Orders with ChangeNotifier {
 
   //////+++++++++++++++++++++++++++++++++++++++++//////
   Future<void> fetchAndSetOrders() async {
-    const url =
-        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json';
+    final url =
+        'https://myshoppbackend-default-rtdb.asia-southeast1.firebasedatabase.app/orders/$userId.json?auth=$authToken';
     try {
       var loadedOrders = <OrderItem>[];
       final response = await http.get(
