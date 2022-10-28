@@ -112,10 +112,17 @@ class ProductItem extends StatelessWidget {
             ),
             backgroundColor: Colors.black26,
           ),
-          child: Image.network(
-            productData.imageUrl,
-            fit: BoxFit.cover,
-            alignment: Alignment.centerRight,
+          child: Hero(
+            tag: productData.id,
+            child: FadeInImage(
+              placeholder:
+                  const AssetImage('lib/assets/images/product-placeholder.png'),
+              image: NetworkImage(
+                productData.imageUrl,
+              ),
+              fit: BoxFit.fill,
+              alignment: Alignment.centerRight,
+            ),
           ),
         ),
       ),

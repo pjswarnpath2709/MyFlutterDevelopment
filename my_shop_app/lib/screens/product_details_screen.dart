@@ -22,44 +22,71 @@ class ProductDetailScreen extends StatelessWidget {
 //////+++++++++++++++++++++++++++++++++++++++++//////
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(loadedProduct.title),
-      ),
-      body: Center(
-          child: Column(
-        children: [
-          Card(
-            child: Image.network(
-              loadedProduct.imageUrl,
-              height: 400,
-              width: 400,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Chip(
-            label: Text('\$ ${loadedProduct.price.toStringAsFixed(2)}'),
-          ),
-          Chip(
-            label: Text(loadedProduct.id),
-          ),
-          SizedBox(
-            height: 100,
-            width: 300,
-            child: Card(
-              child: Text(
-                loadedProduct.description,
-                textAlign: TextAlign.center,
+      // appBar: AppBar(
+      //   title: Text(loadedProduct.title),
+      // ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 300,
+            pinned: true,
+            automaticallyImplyLeading: true,
+            centerTitle: false,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
+                loadedProduct.title,
+                textAlign: TextAlign.start,
+                style: const TextStyle(color: Colors.red),
+              ),
+              background: Hero(
+                tag: routeArgs['id']!,
+                child: FadeInImage(
+                  fadeInCurve: Curves.easeIn,
+                  placeholder: const AssetImage(
+                      'lib/assets/images/product-placeholder.png'),
+                  image: NetworkImage(
+                    loadedProduct.imageUrl,
+                  ),
+                  height: 400,
+                  width: 400,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                const SizedBox(
+                  height: 20,
+                ),
+                Chip(
+                  label: Text('\$ ${loadedProduct.price.toStringAsFixed(2)}'),
+                ),
+                Chip(
+                  label: Text(loadedProduct.id),
+                ),
+                SizedBox(
+                  height: 100,
+                  width: 300,
+                  child: Card(
+                    child: Text(
+                      loadedProduct.description,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 800,
+                  child: Text(
+                    'Try Scrolling Upwards.👆',
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
-      )),
+      ),
     );
   }
 
