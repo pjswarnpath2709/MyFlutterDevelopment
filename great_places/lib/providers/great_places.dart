@@ -69,21 +69,22 @@ class GreatPlaces with ChangeNotifier {
 
       _items = dataList.map(
         (item) {
+          print(item);
           return Place(
             id: item['id'],
             title: item['title'],
             location: PlaceLocation(
-              latitude: double.parse(item['loc_lat']),
-              longitude: double.parse(item['loc_lng']),
+              latitude: item['loc_lat'],
+              longitude: item['loc_lng'],
               address: item['address'],
             ),
             image: File(item['image']),
           );
         },
       ).toList();
-      // _items.forEach((place) {
-      //   print([place.location.latitude, place.location.longitude]);
-      // });
+      _items.forEach((place) {
+        print([place.location.latitude, place.location.longitude]);
+      });
       notifyListeners();
     } catch (error) {
       print(error);
